@@ -1,10 +1,10 @@
 # Flutter Album Lab-3 Assignment
 
-## Name - Natnael Yohanes
+### Name - Natnael Yohanes
 
-## ID - UGR/0668/15
+### ID - UGR/0668/15
 
-## Section 3
+### Section 3
 
 ## Getting Started
 
