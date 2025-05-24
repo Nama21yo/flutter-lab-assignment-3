@@ -1,6 +1,10 @@
-# flutter_lab_assignment_3
+# Flutter Album Lab-3 Assignment
 
-A new Flutter project.
+## Name - Natnael Yohanes
+
+## ID - UGR/0668/15
+
+## Section 3
 
 ## Getting Started
 
