@@ -4,18 +4,17 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_lab_assignment_3/blocs/album_detail/album_detail_bloc.dart';
 import 'package:flutter_lab_assignment_3/blocs/album_detail/album_detail_event.dart';
 import 'package:flutter_lab_assignment_3/blocs/album_detail/album_detail_state.dart';
-import 'package:flutter_lab_assignment_3/models/photo.dart'; // Assuming Photo model is here
+import 'package:flutter_lab_assignment_3/models/photo.dart';
 
-// --- Color Palette (Applied inline for this example) ---
-const Color _appBarColor = Color(0xFF1A237E); // Indigo Dark
+const Color _appBarColor = Color(0xFF1A237E);
 const Color _appBarTextColor = Colors.white;
-const Color _scaffoldBackgroundColor = Color(0xFFECEFF1); // Blue Grey Light
+const Color _scaffoldBackgroundColor = Color(0xFFECEFF1);
 const Color _cardColor = Colors.white;
-const Color _primaryTextColor = Color(0xFF263238); // Blue Grey Dark
-const Color _secondaryTextColor = Color(0xFF546E7A); // Blue Grey Medium
-const Color _accentColor = Color(0xFFFBC02D); // Yellow/Amber
-const Color _errorColor = Color(0xFFD32F2F); // Red
-const Color _placeholderColor = Color(0xFFB0BEC5); // Blue Grey Light/Medium
+const Color _primaryTextColor = Color(0xFF263238);
+const Color _secondaryTextColor = Color(0xFF546E7A);
+const Color _accentColor = Color(0xFFFBC02D);
+const Color _errorColor = Color(0xFFD32F2F);
+const Color _placeholderColor = Color(0xFFB0BEC5);
 
 class AlbumDetailScreen extends StatelessWidget {
   final int albumId;
@@ -35,11 +34,8 @@ class AlbumDetailScreen extends StatelessWidget {
           foregroundColor: _appBarTextColor,
           elevation: 4.0,
           leading: IconButton(
-            icon: const Icon(
-                Icons.arrow_back_ios_new_rounded), // Modern back icon
-            onPressed: () {
-              context.go('/');
-            },
+            icon: const Icon(Icons.arrow_back_ios_new_rounded),
+            onPressed: () => context.go('/'),
           ),
           title: BlocBuilder<AlbumDetailBloc, AlbumDetailState>(
             buildWhen: (previous, current) =>
@@ -49,7 +45,7 @@ class AlbumDetailScreen extends StatelessWidget {
                 state.album?.title ?? 'Album Details',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 18, // Adjusted for potentially long titles
+                  fontSize: 18,
                 ),
                 overflow: TextOverflow.ellipsis,
               );
@@ -62,7 +58,8 @@ class AlbumDetailScreen extends StatelessWidget {
               case AlbumDetailStatus.initial:
               case AlbumDetailStatus.loading:
                 return const Center(
-                    child: CircularProgressIndicator(color: _accentColor));
+                  child: CircularProgressIndicator(color: _accentColor),
+                );
               case AlbumDetailStatus.success:
                 return _buildAlbumDetail(context, state);
               case AlbumDetailStatus.failure:
@@ -71,7 +68,6 @@ class AlbumDetailScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(24.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Icon(Icons.error_outline_rounded,
                             color: _errorColor, size: 60),
@@ -86,18 +82,19 @@ class AlbumDetailScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 10),
-                        Text(
-                          state.errorMessage,
-                          style: const TextStyle(
-                              fontSize: 16, color: _secondaryTextColor),
+                        const Text(
+                          'Please check your connection or try again later.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: _secondaryTextColor,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 24),
                         ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: _accentColor,
-                            foregroundColor:
-                                _primaryTextColor, // Dark text on light accent
+                            foregroundColor: _primaryTextColor,
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 24, vertical: 12),
                             textStyle: const TextStyle(
@@ -107,9 +104,9 @@ class AlbumDetailScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            context.read<AlbumDetailBloc>().add(
-                                  FetchAlbumDetail(albumId: albumId),
-                                );
+                            context
+                                .read<AlbumDetailBloc>()
+                                .add(FetchAlbumDetail(albumId: albumId));
                           },
                           icon: const Icon(Icons.refresh_rounded),
                           label: const Text('RETRY'),
@@ -151,10 +148,10 @@ class AlbumDetailScreen extends StatelessWidget {
                 Text(
                   album.title,
                   style: const TextStyle(
-                    fontSize: 26, // Larger title
+                    fontSize: 26,
                     fontWeight: FontWeight.bold,
                     color: _primaryTextColor,
-                    height: 1.3, // Line height
+                    height: 1.3,
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -184,14 +181,13 @@ class AlbumDetailScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 24),
-                // ignore: deprecated_member_use
-                Divider(color: _placeholderColor.withOpacity(0.5)),
+                Divider(color: _placeholderColor.withAlpha(127)), // 0.5 opacity
                 const SizedBox(height: 16),
                 const Text(
                   'Photos in this Album',
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w600, // Semi-bold
+                    fontWeight: FontWeight.w600,
                     color: _primaryTextColor,
                   ),
                 ),
@@ -222,21 +218,17 @@ class AlbumDetailScreen extends StatelessWidget {
               : GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.fromLTRB(
-                      20, 0, 20, 20), // Adjusted padding
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: MediaQuery.of(context).size.width > 600
-                        ? 3
-                        : 2, // Responsive columns
-                    childAspectRatio:
-                        0.9, // Adjusted aspect ratio for more space for title
+                    crossAxisCount:
+                        MediaQuery.of(context).size.width > 600 ? 3 : 2,
+                    childAspectRatio: 0.9,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
                   ),
                   itemCount: state.photos.length,
                   itemBuilder: (context, index) {
-                    final photo = state.photos[index];
-                    return PhotoGridItem(photo: photo);
+                    return PhotoGridItem(photo: state.photos[index]);
                   },
                 ),
         ],
@@ -254,49 +246,42 @@ class PhotoGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: _cardColor,
-      clipBehavior: Clip.antiAlias, // Important for rounded corners on images
+      clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0), // Softer corners
+        borderRadius: BorderRadius.circular(12.0),
       ),
-      elevation: 3.0, // Subtle shadow
+      elevation: 3.0,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch, // Stretch children
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            flex: 3, // Give more space to image
+            flex: 3,
             child: Image.network(
-              photo
-                  .thumbnailUrl, // Use thumbnail for grid, full URL for detail if available
+              photo.thumbnailUrl,
               fit: BoxFit.cover,
-              // Loading builder can be added if you want a placeholder while image loads
-              // loadingBuilder: (context, child, loadingProgress) {
-              //   if (loadingProgress == null) return child;
-              //   return Center(child: CircularProgressIndicator(color: _accentColor, value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null));
-              // },
               errorBuilder: (context, error, stackTrace) {
                 return Container(
-                  // ignore: deprecated_member_use
-                  color: _placeholderColor.withOpacity(0.2),
+                  color: _placeholderColor.withAlpha(51), // 0.2 opacity
                   child: Center(
-                      child: Icon(Icons.broken_image_outlined,
-                          // ignore: deprecated_member_use
-                          color: _secondaryTextColor.withOpacity(0.7),
-                          size: 40)),
+                    child: Icon(Icons.broken_image_outlined,
+                        color: _secondaryTextColor.withAlpha(179), // 0.7
+                        size: 40),
+                  ),
                 );
               },
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0), // Slightly more padding
+            padding: const EdgeInsets.all(10.0),
             child: Text(
               photo.title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 13,
-                fontWeight: FontWeight.w500, // Medium weight
+                fontWeight: FontWeight.w500,
                 color: _primaryTextColor,
-                height: 1.2, // Line height for readability
+                height: 1.2,
               ),
             ),
           ),

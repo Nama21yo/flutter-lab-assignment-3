@@ -2,27 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_lab_assignment_3/repositories/album_repository.dart';
-import 'package:flutter_lab_assignment_3/router/app_router.dart';
+import 'package:flutter_lab_assignment_3/navigation/app_router.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
-
-  final AlbumRepository albumRepository = AlbumRepository(
-    httpClient: http.Client(),
-  );
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: albumRepository,
+    return RepositoryProvider(
+      create: (context) => AlbumRepository(httpClient: http.Client()),
       child: MaterialApp.router(
         title: 'Album Viewer',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
           useMaterial3: true,
         ),
         routerConfig: AppRouter.router,

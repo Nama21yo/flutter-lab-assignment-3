@@ -20,9 +20,8 @@ class AlbumRepository {
       }
 
       final List<dynamic> albumsJson = json.decode(albumResponse.body);
-      final List<Album> albums = albumsJson
-          .map((albumJson) => Album.fromJson(albumJson))
-          .toList();
+      final List<Album> albums =
+          albumsJson.map((albumJson) => Album.fromJson(albumJson)).toList();
 
       // Fetch photos to get thumbnails for albums
       final photoResponse = await httpClient.get(
@@ -34,9 +33,8 @@ class AlbumRepository {
       }
 
       final List<dynamic> photosJson = json.decode(photoResponse.body);
-      final List<Photo> photos = photosJson
-          .map((photoJson) => Photo.fromJson(photoJson))
-          .toList();
+      final List<Photo> photos =
+          photosJson.map((photoJson) => Photo.fromJson(photoJson)).toList();
 
       // Match first photo of each album as thumbnail
       for (var album in albums) {
@@ -63,9 +61,7 @@ class AlbumRepository {
       }
 
       final List<dynamic> photosJson = json.decode(response.body);
-      return photosJson
-          .map((photoJson) => Photo.fromJson(photoJson))
-          .toList();
+      return photosJson.map((photoJson) => Photo.fromJson(photoJson)).toList();
     } catch (e) {
       throw Exception('Failed to fetch album photos: $e');
     }
